@@ -192,58 +192,108 @@
     7. Ajax Contact Form And Appointment
   --------------------------------------------------------------*/
   // Contact Form
-  function formValidation() {
-    if ($.exists('#contact-form #submit')) {
-      $('#st-alert').hide();
-      $('#contact-form #submit').on('click', function () {
-        var name = $('#name').val();
-        var subject = $('#subject').val();
-        var phone = $('#phone').val();
-        var email = $('#email').val();
-        var msg = $('#msg').val();
-        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  // function formValidation() {
+  //   if ($('#contact-form #submit').length > 0) {
+  //     $('#st-alert').hide(); // Hide alert initially
+  
+  //     $('#contact-form').on('submit', function (e) {
+  //       e.preventDefault(); // Prevent default form submission
+  
+  //       var email = $('#email').val();
+  //       var msg = $('#message').val();
+  
+  //       var regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  
+  //       if (!regex.test(email)) {
+  //         $('#st-alert').html('<div class="alert alert-danger"><strong>Warning!</strong> Please enter a valid email.</div>').fadeIn();
+  //         return false;
+  //       }
+  
+  //       if (email.trim() !== '' && msg.trim() !== '') {
+  //         var formData = { email: email, message: msg };
+  
+  //         $.ajax({
+  //           type: "POST",
+  //           url: "https://formspree.io/f/myzkjobz",
+  //           data: formData,
+  //           success: function () {
+  //             $('#st-alert').html('<div class="alert alert-success"><strong>Success!</strong> Your message has been sent successfully.</div>').fadeIn();
+  //           },
+  //           error: function () {
+  //             $('#st-alert').html('<div class="alert alert-danger"><strong>Error!</strong> There was an issue sending your message. Please try again.</div>').fadeIn();
+  //           }
+  //         });
+  //       } else {
+  //         $('#st-alert').html('<div class="alert alert-danger"><strong>Warning!</strong> Both fields are required.</div>').fadeIn();
+  //       }
+  //       return false;
+  //     });
+  //   }
+  // }
+  
+  // $(document).ready(function() {
+  //   formValidation();
+  // });
+  
 
+
+
+
+
+
+  function formValidation() {
+    if ($('#contact-form #submit').length > 0) {
+      $('#st-alert').hide(); // Hide alert initially
+  
+      $('#contact-form').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
+  
+        var email = $('#email').val();
+        var msg = $('#message').val();
+  
+        var regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  
         if (!regex.test(email)) {
-          $('#st-alert').fadeIn().html('<div class="alert alert-danger"><strong>Warning!</strong> Please Enter Valid Email.</div>');
+          $('#st-alert').html('<div class="alert alert-danger"><strong>Warning!</strong> Please enter a valid email.</div>').fadeIn();
           return false;
         }
-
-        name = $.trim(name);
-        subject = $.trim(subject);
-        phone = $.trim(phone);
-        email = $.trim(email);
-        msg = $.trim(msg);
-
-        if (name != '' && email != '' && msg != '') {
-          var values = "name=" + name +
-            "&subject=" + subject +
-            "&phone=" + phone +
-            "&email=" + email +
-            "&msg=" + msg;
+  
+        if (email.trim() !== '' && msg.trim() !== '') {
+          var formData = { email: email, message: msg };
+  
           $.ajax({
             type: "POST",
-            url: "assets/php/mail.php",
-            data: values,
-            success: function () {
-              $('#name').val('');
-              $('#subject').val('');
-              $('#phone').val('');
-              $('#email').val('');
-              $('#msg').val('');
-
-              $('#st-alert').fadeIn().html('<div class="alert alert-success"><strong>Success!</strong> Email has been sent successfully.</div>');
-              setTimeout(function () {
-                $('#st-alert').fadeOut('slow');
-              }, 4000);
+            // url: "https://formspree.io/f/mwpvbyyn", // real email
+            url: "https://formspree.io/f/myzkjobz",  // gpt email
+            data: formData,
+            dataType: "json", // Ensure JSON response is expected
+            success: function (response) {
+              $('#st-alert').html('<div class="alert alert-success"><strong>Success!</strong> Your message has been sent successfully.</div>').fadeIn();
+            },
+            error: function (xhr) {
+              if (xhr.status === 200) {
+                // Treat HTTP 200 as success (some servers respond like this)
+                $('#st-alert').html('<div class="alert alert-success"><strong>Success!</strong> Your message has been sent successfully.</div>').fadeIn();
+              } else {
+                $('#st-alert').html('<div class="alert alert-danger"><strong>Error!</strong> There was an issue sending your message. Please try again.</div>').fadeIn();
+              }
             }
           });
         } else {
-          $('#st-alert').fadeIn().html('<div class="alert alert-danger"><strong>Warning!</strong> All fields are required.</div>');
+          $('#st-alert').html('<div class="alert alert-danger"><strong>Warning!</strong> Both fields are required.</div>').fadeIn();
         }
         return false;
       });
     }
   }
+  
+  $(document).ready(function() {
+    formValidation();
+  });
+  
+  
+  
+  
 
 
   /*--------------------------------------------------------------
