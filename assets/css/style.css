@@ -3053,3 +3053,41 @@ canvas {
 }
 
 
+
+
+
+
+/* Container setup */
+.icon-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-image {
+  transition: transform 0.3s ease;
+}
+
+.icon-container:hover .icon-image {
+  transform: scale(1.15);
+}
+
+.icon-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #fff;
+  font-size: 1.5rem; 
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  pointer-events: none; 
+}
+
+.icon-container:hover .icon-label {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+
