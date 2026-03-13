@@ -54,6 +54,7 @@
     particles();
     parallaxEffect();
     rippleInit();
+    futuristicFxInit();
     new WOW().init();
 
   });
@@ -414,7 +415,7 @@
       particlesJS("particles-js", {
         "particles": {
           "number": {
-            "value": 355,
+            "value": 90,
             "density": {
               "enable": true,
               "value_area": 789.1476416322727
@@ -439,7 +440,7 @@
             }
           },
           "opacity": {
-            "value": 0.48927153781200905,
+            "value": 0.45,
             "random": false,
             "anim": {
               "enable": true,
@@ -484,11 +485,11 @@
           "detect_on": "canvas",
           "events": {
             "onhover": {
-              "enable": true,
-              "mode": "bubble"
+              "enable": false,
+              "mode": "repulse"
             },
             "onclick": {
-              "enable": true,
+              "enable": false,
               "mode": "push"
             },
             "resize": true
@@ -563,5 +564,133 @@
         $(this).css('background-position', `center -${largeEffectPixel}px`);
       }
     });
+  }
+
+  /*--------------------------------------------------------------
+    Futuristic UI micro-interactions + lightweight scroll reveals
+  --------------------------------------------------------------*/
+  function futuristicFxInit() {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('fx-reduced-motion');
+      return;
+    }
+
+    initScrollReveals();
+    initTypingFx();
+    initPointerGlow();
+  }
+
+  function initScrollReveals() {
+    if (!('IntersectionObserver' in window)) return;
+
+    var revealSelectors = [
+      '.st-section-heading',
+      '.st-iconbox',
+      '.st-portfolio',
+      '.st-post-single',
+      '.st-testimonial',
+      '.st-single-contact-info',
+      '.st-text-block',
+      '.st-progressbar-wrap',
+      '.st-resume-timeline'
+    ].join(',');
+
+    var nodes = document.querySelectorAll(revealSelectors);
+    if (!nodes || !nodes.length) return;
+
+    nodes.forEach(function (el) {
+      // Avoid fighting existing WOW/animate.css hooks
+      if (el.classList.contains('wow')) return;
+      if (el.classList.contains('fx-reveal')) return;
+      el.classList.add('fx-reveal');
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('fx-in');
+        io.unobserve(entry.target);
+      });
+    }, { root: null, threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+
+    nodes.forEach(function (el) {
+      if (!el.classList.contains('fx-reveal')) return;
+      io.observe(el);
+    });
+  }
+
+  function initTypingFx() {
+    var el = document.querySelector('.animated-title');
+    if (!el) return;
+
+    var fullText = (el.getAttribute('data-fx-fulltext') || el.textContent || '').trim();
+    if (!fullText) return;
+
+    el.setAttribute('data-fx-fulltext', fullText);
+    el.setAttribute('aria-label', fullText);
+    el.textContent = '';
+
+    var caret = document.createElement('span');
+    caret.className = 'fx-caret';
+    caret.setAttribute('aria-hidden', 'true');
+
+    var textNode = document.createElement('span');
+    textNode.className = 'fx-typed';
+    textNode.setAttribute('aria-hidden', 'true');
+
+    el.appendChild(textNode);
+    el.appendChild(caret);
+
+    var i = 0;
+    var speedMs = 16;
+    var maxChars = Math.min(fullText.length, 180);
+
+    function tick() {
+      i++;
+      textNode.textContent = fullText.slice(0, i);
+      if (i < maxChars) {
+        window.setTimeout(tick, speedMs);
+      } else {
+        caret.classList.add('fx-caret-done');
+      }
+    }
+
+    // Start when hero is visible (or immediately if not supported)
+    if (!('IntersectionObserver' in window)) {
+      tick();
+      return;
+    }
+
+    var started = false;
+    var hero = document.querySelector('.st-hero-wrap') || el;
+    var io = new IntersectionObserver(function (entries) {
+      if (started) return;
+      if (!entries[0] || !entries[0].isIntersecting) return;
+      started = true;
+      tick();
+      io.disconnect();
+    }, { threshold: 0.25 });
+
+    io.observe(hero);
+  }
+
+  function initPointerGlow() {
+    // One shared CSS-driven glow using CSS vars (no per-frame JS animation)
+    var root = document.documentElement;
+    var rafId = null;
+    var last = { x: 0, y: 0 };
+
+    function onMove(e) {
+      last.x = e.clientX;
+      last.y = e.clientY;
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(function () {
+        rafId = null;
+        root.style.setProperty('--fx-mx', last.x + 'px');
+        root.style.setProperty('--fx-my', last.y + 'px');
+      });
+    }
+
+    window.addEventListener('pointermove', onMove, { passive: true });
   }
 })(jQuery); // End of use strict

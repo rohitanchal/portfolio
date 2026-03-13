@@ -2909,7 +2909,7 @@ canvas {
 }
 
 .st-single-contact-info:hover i {
-  border-color: #fec544;
+  border-color: var(--fx-neon-1);
 }
 
 .st-single-contact-info i {
@@ -2945,7 +2945,7 @@ canvas {
 }
 
 .st-single-info-details a:hover {
-  color: #fec544;
+  color: var(--fx-neon-1);
 }
 
 .st-single-info-details a:last-child {
@@ -3063,23 +3063,15 @@ canvas {
   overflow: hidden;
 }
 
-.icon-image {
-  transition: transform 0.3s ease;
-}
-
-.icon-container:hover .icon-image {
-  transform: scale(1.15);
-}
-
 .icon-label {
   position: absolute;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
+  bottom: 14px;
+  transform: translateX(-50%) translateY(8px) scale(0.96);
   opacity: 0;
   transition: all 0.3s ease;
   color: #fff;
-  font-size: 1.5rem; 
+  font-size: 1.1rem;
   font-weight: 600;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
   pointer-events: none; 
@@ -3087,7 +3079,21 @@ canvas {
 
 .icon-container:hover .icon-label {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Normalize skill icon sizing so each card looks consistent (e.g. third card) */
+.icon-container .icon-image {
+  transition: transform 0.3s ease;
+  max-width: 100px;
+  max-height: 100px;
+  margin: 0 auto 12px;
+  display: block;
+  object-fit: contain;
+}
+
+.icon-container:hover .icon-image {
+  transform: scale(1.08);
 }
 
 
@@ -3099,4 +3105,427 @@ canvas {
 .modal .card:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Project 2 modal: section#projects is under Bootstrap backdrop (z-index 1050), so modal content was unclickable. Raise section when modal is open so modal sits above backdrop. */
+body.modal-open #projects {
+  z-index: 1060;
+  position: relative;
+}
+
+/*--------------------------------------------------------------
+Futuristic / Neon UI Enhancements (no layout changes)
+----------------------------------------------------------------*/
+:root {
+  --fx-neon-1: #00e5ff;
+  --fx-neon-2: #b400ff;
+  --fx-neon-3: #fec544; /* keeps your existing accent */
+  --fx-bg-0: #070d1b;
+  --fx-bg-1: #0a101e;
+  --fx-glow: 0 0 18px rgba(0, 229, 255, 0.22), 0 0 44px rgba(180, 0, 255, 0.12);
+  --fx-glow-strong: 0 0 22px rgba(0, 229, 255, 0.35), 0 0 60px rgba(180, 0, 255, 0.18);
+  --fx-ring: 0 0 0 3px rgba(0, 229, 255, 0.22);
+  --fx-mx: 50vw;
+  --fx-my: 50vh;
+}
+
+/* Replace old accent (#fec544) with neon cyan across UI */
+.st-nav .st-nav-list > li > a.active,
+.st-section-heading.st-style1 .st-section-heading-title,
+.st-progressbar-percentage,
+.st-resume-timeline .st-resume-timeline-title,
+.st-post-single.st-style1 .st-post-date .st-post-author,
+.st-post-single.st-style1 .st-post-date .st-post-publish-date,
+.st-post-single.st-style1 .st-post-title:hover,
+.st-widget-list a:hover,
+.st-tagcloud .st-tag:hover,
+.st-post-label a:hover,
+.st-post-share-btn-list a:hover,
+.st-post-tage-list li a:hover,
+.comment-author .nm,
+.comment-author .nm a,
+.comment-reply-link,
+.st-single-contact-info:hover i,
+.st-single-info-details a:hover {
+  color: var(--fx-neon-1);
+}
+
+.st-btn.st-style2.st-color1 {
+  border-color: rgba(0, 229, 255, 0.6);
+  color: var(--fx-neon-1);
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.18);
+}
+
+.st-iconbox.st-style1:hover .st-iconbox-icon,
+.st-iconbox.st-style1:hover .st-iconbox-title,
+.st-testimonial.st-style1:hover .st-testimonial-name,
+.st-testimonial.st-style1:hover .st-testimonial-text {
+  border-color: rgba(0, 229, 255, 0.45);
+  color: var(--fx-neon-1);
+}
+
+.st-progressbar-in {
+  background-color: var(--fx-neon-1);
+}
+
+/* Swap remaining accent-dependent backgrounds/borders/fills to neon */
+.st-nav .sp-phone .sp-phone-no {
+  color: var(--fx-neon-1);
+}
+
+.st-hero.st-style1 .st-hero-text h3,
+.st-text-block.st-style1 .st-text-block-subtitle {
+  color: var(--fx-neon-1);
+}
+
+.st-iconbox.st-style1:hover .st-iconbox-icon {
+  border-color: rgba(0, 229, 255, 0.55) !important;
+}
+
+.st-iconbox.st-style1:hover .st-iconbox-icon svg {
+  fill: var(--fx-neon-1) !important;
+}
+
+.st-portfolio-item-hover i {
+  background: var(--fx-neon-1);
+}
+
+.comment-form textarea:focus,
+.comment-form input:focus,
+.st-form-field input:focus,
+.st-form-field textarea:focus {
+  border-color: rgba(0, 229, 255, 0.65) !important;
+}
+
+/* Futuristic button palette (override existing yellow-text look) */
+.st-btn.st-style1.st-color1,
+.st-btn.st-style1.st-color2,
+.st-btn.st-style1.st-color5 {
+  color: #07101b;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.95), rgba(180, 0, 255, 0.85), rgba(254, 197, 68, 0.92));
+  background-size: 220% 220%;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), var(--fx-glow);
+  text-shadow: none;
+  animation: fx-btn-gradient 7s ease-in-out infinite alternate;
+}
+
+.st-btn.st-style1.st-color1:hover,
+.st-btn.st-style1.st-color2:hover,
+.st-btn.st-style1.st-color5:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), var(--fx-glow-strong);
+  filter: saturate(1.12) contrast(1.02);
+}
+
+.st-btn.st-style1.st-color1:focus-visible,
+.st-btn.st-style1.st-color2:focus-visible,
+.st-btn.st-style1.st-color5:focus-visible {
+  box-shadow: var(--fx-ring), 0 16px 40px rgba(0, 0, 0, 0.45), var(--fx-glow-strong);
+}
+
+/* Outline buttons: neon text + animated border, futuristic fill on hover */
+.st-btn.st-style2.st-color1,
+.st-btn.st-style2.st-color2 {
+  color: rgba(253, 254, 255, 0.95);
+  border-color: rgba(0, 229, 255, 0.55);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.14);
+}
+
+.st-btn.st-style2.st-color1::after,
+.st-btn.st-style2.st-color2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(120deg, rgba(0, 229, 255, 0.18), rgba(180, 0, 255, 0.12), rgba(254, 197, 68, 0.14));
+  transition: opacity 240ms ease;
+}
+
+.st-btn.st-style2.st-color1:hover,
+.st-btn.st-style2.st-color2:hover {
+  color: #07101b;
+  border-color: transparent;
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.92), rgba(180, 0, 255, 0.82), rgba(254, 197, 68, 0.9));
+  background-size: 220% 220%;
+  animation: fx-btn-gradient 7s ease-in-out infinite alternate;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), var(--fx-glow);
+  text-shadow: none;
+}
+
+.st-btn.st-style2.st-color1:hover::after,
+.st-btn.st-style2.st-color2:hover::after {
+  opacity: 1;
+}
+
+@keyframes fx-btn-gradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.fx-reduced-motion * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Animated cyber background (lightweight: 2 pseudo layers + one radial glow) */
+body {
+  position: relative;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Grid + subtle scanlines */
+body::before {
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180, 0, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px, 64px 64px, 100% 8px;
+  background-position: 0 0, 0 0, 0 0;
+  opacity: 0.28;
+  transform: translateZ(0);
+}
+
+/* Gradient haze + pointer glow */
+body::after {
+  background:
+    radial-gradient(520px 360px at var(--fx-mx) var(--fx-my), rgba(0, 229, 255, 0.10), transparent 58%),
+    radial-gradient(560px 420px at 20% 10%, rgba(180, 0, 255, 0.06), transparent 62%),
+    linear-gradient(120deg, rgba(0, 229, 255, 0.03), rgba(180, 0, 255, 0.02), rgba(254, 197, 68, 0.03));
+  opacity: 0.75;
+  transform: translateZ(0);
+}
+
+.st-content,
+header,
+section,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Disable heavy background effects on smaller devices for perf */
+@media screen and (max-width: 991px) {
+  body::before { opacity: 0.18; }
+  body::after { opacity: 0.45; }
+}
+
+/* Navigation underline + hover shimmer (keeps existing hierarchy) */
+@media screen and (min-width: 992px) {
+  .st-nav .st-nav-list > li > a {
+    position: relative;
+    letter-spacing: 0.5px;
+    will-change: transform;
+  }
+  .st-nav .st-nav-list > li > a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 10px;
+    height: 2px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, var(--fx-neon-1), var(--fx-neon-2), var(--fx-neon-3));
+    transition: transform 200ms ease;
+  }
+  .st-nav .st-nav-list > li > a:hover::after,
+  .st-nav .st-nav-list > li > a.active::after {
+    transform: scaleX(1);
+  }
+  .st-nav .st-nav-list > li > a:hover {
+    color: #fdfeff;
+    text-shadow: 0 0 12px rgba(0, 229, 255, 0.18);
+    transform: translate3d(0, -1px, 0);
+  }
+}
+
+/* Buttons: neon edge, animated gradient, micro-interactions */
+.st-btn.st-style1,
+.st-btn.st-style2 {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform, box-shadow, filter;
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+.st-btn.st-style1::before,
+.st-btn.st-style2::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.0), rgba(0, 229, 255, 0.35), rgba(180, 0, 255, 0.0));
+  opacity: 0;
+  transform: translateX(-35%);
+  transition: opacity 220ms ease, transform 520ms ease;
+  pointer-events: none;
+}
+
+.st-btn.st-style1:hover::before,
+.st-btn.st-style2:hover::before {
+  opacity: 1;
+  transform: translateX(35%);
+}
+
+.st-btn.st-style1:hover,
+.st-btn.st-style2:hover {
+  box-shadow: 0px 10px 25px rgba(254, 197, 68, 0.10), var(--fx-glow);
+  filter: saturate(1.08);
+  transform: translate3d(0, -2px, 0);
+}
+
+.st-btn.st-style1:active,
+.st-btn.st-style2:active {
+  transform: translate3d(0, 0px, 0) scale(0.99);
+}
+
+.st-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--fx-ring), var(--fx-glow);
+}
+
+/* Cards / blocks: animated border + glow on hover */
+.st-iconbox.st-style1,
+.st-testimonial.st-style1 .st-testimonial-text,
+.st-widget,
+.st-portfolio,
+.st-post-single.st-style1 .st-post-thumb,
+.st-social-link .st-social-btn,
+.st-single-contact-info i {
+  position: relative;
+  transform: translateZ(0);
+  will-change: transform, box-shadow, filter;
+}
+
+.st-iconbox.st-style1::after,
+.st-testimonial.st-style1 .st-testimonial-text::before,
+.st-widget::before,
+.st-social-link .st-social-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(120deg, rgba(0, 229, 255, 0.35), rgba(180, 0, 255, 0.18), rgba(254, 197, 68, 0.18));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  padding: 1px;
+  transition: opacity 240ms ease;
+}
+
+.st-iconbox.st-style1:hover,
+.st-testimonial.st-style1:hover .st-testimonial-text,
+.st-widget:hover,
+.st-social-link .st-social-btn:hover {
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), var(--fx-glow);
+  transform: translate3d(0, -4px, 0);
+}
+
+.st-iconbox.st-style1:hover::after,
+.st-testimonial.st-style1:hover .st-testimonial-text::before,
+.st-widget:hover::before,
+.st-social-link .st-social-btn:hover::before {
+  opacity: 1;
+}
+
+/* Icon micro-interactions */
+.st-hero-social-links .st-social-btn,
+.st-social-link .st-social-btn .st-social-icon,
+.st-site-header svg,
+.st-portfolio-item-hover i {
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+  will-change: transform;
+}
+
+.st-hero-social-links .st-social-btn:hover,
+.st-social-link .st-social-btn:hover .st-social-icon {
+  transform: translate3d(0, -2px, 0) scale(1.04);
+  box-shadow: var(--fx-glow);
+  filter: saturate(1.1);
+}
+
+/* Section heading line: subtle animated gradient */
+.st-section-heading.st-style1 .st-section-heading-title::after {
+  background: linear-gradient(90deg, var(--fx-neon-1), var(--fx-neon-2), var(--fx-neon-3));
+  background-size: 220% 100%;
+  animation: fx-gradient-pan 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes fx-gradient-pan {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* Text reveal (IntersectionObserver adds .fx-reveal and .fx-in) */
+.fx-reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 360ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.fx-reveal.fx-in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Typing caret for existing .animated-title */
+.animated-title .fx-caret {
+  display: inline-block;
+  width: 10px;
+  margin-left: 6px;
+  border-bottom: 2px solid rgba(0, 229, 255, 0.9);
+  filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.35));
+  transform: translateY(-2px);
+  animation: fx-caret 0.95s steps(1) infinite;
+}
+
+.animated-title .fx-caret.fx-caret-done {
+  opacity: 0.65;
+  animation: none;
+}
+
+@keyframes fx-caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Subtle section transitions (no layout change) */
+section {
+  scroll-margin-top: 90px;
+}
+
+/* Make hero feel more “alive” without changing its content */
+.st-hero.st-style1 .st-hero-text h1 {
+  text-shadow: 0 0 22px rgba(0, 229, 255, 0.10), 0 0 44px rgba(180, 0, 255, 0.10);
+}
+
+.st-hero.st-style1 .st-hero-text h3,
+.st-hero.st-style1 .st-hero-text h5 {
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.08);
+}
+
+/* Keep particles subtle (you already have #particles-js) */
+#particles-js {
+  opacity: 0.55;
+  filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.10));
 }
